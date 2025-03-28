@@ -1,10 +1,12 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
   Users, BookOpen, Calculator, FileText, Bell, 
-  MessageSquare, Calendar, User, BarChart
+  MessageSquare, Calendar, User, BarChart, X
 } from "lucide-react";
+import { useMediaQuery } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 interface SidebarProps {
   open: boolean;
@@ -12,6 +14,7 @@ interface SidebarProps {
 
 const Sidebar = ({ open }: SidebarProps) => {
   const location = useLocation();
+  const isMobile = useMediaQuery("(max-width: 768px)");
   
   const menuItems = [
     { 
@@ -68,16 +71,25 @@ const Sidebar = ({ open }: SidebarProps) => {
 
   return (
     <div 
-      className={`h-full bg-sidebar transition-all duration-300 ease-in-out border-r border-sidebar-border ${
-        open ? "w-64" : "w-20"
-      }`}
+      className={`h-full bg-sidebar fixed md:static top-0 left-0 z-50 md:z-auto transition-all duration-300 ease-in-out ${
+        open ? "translate-x-0 w-64" : "md:w-20 -translate-x-full md:translate-x-0"
+      } border-r border-sidebar-border`}
     >
       <div className="flex flex-col h-full">
-        <div className="p-4 border-b border-sidebar-border flex items-center justify-center h-16">
+        <div className="p-4 border-b border-sidebar-border flex items-center justify-between h-16">
           <h1 className={`font-bold text-sidebar-foreground transition-opacity duration-200 ${open ? 'opacity-100' : 'opacity-0 hidden'}`}>
             EduAdmin
           </h1>
-          <span className={`text-2xl font-bold text-primary ${!open ? 'block' : 'hidden'}`}>E</span>
+          <span className={`text-2xl font-bold text-primary ${!open && !isMobile ? 'block' : 'hidden'}`}>E</span>
+          
+          {isMobile && open && (
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={(e) => {
+              // This is handled by the parent component
+              e.stopPropagation();
+            }}>
+              <X className="h-5 w-5 text-sidebar-foreground" />
+            </Button>
+          )}
         </div>
 
         <div className="flex-1 overflow-y-auto py-4">
@@ -90,7 +102,7 @@ const Sidebar = ({ open }: SidebarProps) => {
                     location.pathname === item.path
                       ? "bg-sidebar-accent text-primary"
                       : "text-sidebar-foreground hover:bg-sidebar-accent"
-                  } ${!open ? "justify-center" : "justify-start"}`}
+                  } ${!open && !isMobile ? "justify-center" : "justify-start"}`}
                 >
                   <span className="flex-shrink-0">{item.icon}</span>
                   <span 
