@@ -15,6 +15,8 @@ import RemarksPage from "./pages/admin/RemarksPage";
 import AttendancePage from "./pages/admin/AttendancePage";
 import StaffPage from "./pages/admin/StaffPage";
 import ExpensesPage from "./pages/admin/ExpensesPage";
+import ProfilePage from "./pages/admin/ProfilePage";
+import SettingsPage from "./pages/admin/SettingsPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -49,6 +51,8 @@ const App = () => (
             <Route path="attendance" element={<AttendancePage />} />
             <Route path="staff" element={<StaffPage />} />
             <Route path="expenses" element={<ExpensesPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
           
           {/* Catch-all */}

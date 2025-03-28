@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
   Users, BookOpen, Calculator, FileText, Bell, 
-  MessageSquare, Calendar, User, BarChart, X
+  MessageSquare, Calendar, User, BarChart, Settings, X
 } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
@@ -66,6 +66,11 @@ const Sidebar = ({ open }: SidebarProps) => {
       title: "Expenses", 
       path: "/admin/expenses", 
       icon: <Calculator className="w-5 h-5" /> 
+    },
+    { 
+      title: "Settings", 
+      path: "/admin/settings", 
+      icon: <Settings className="w-5 h-5" /> 
     }
   ];
 

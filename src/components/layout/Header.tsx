@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Bell, Menu, User, Settings, LogOut } from "lucide-react";
 import {
   DropdownMenu,
@@ -20,23 +21,26 @@ interface HeaderProps {
 
 const Header = ({ toggleSidebar, sidebarOpen }: HeaderProps) => {
   const [notificationsCount, setNotificationsCount] = useState(3);
+  const navigate = useNavigate();
   
   const handleNotificationClick = () => {
-    toast.info("You have 3 unread notifications");
-    // In a real app, you'd navigate to notifications page or open a notification panel
+    navigate("/admin/notifications");
   };
   
   const handleProfileAction = (action: string) => {
     switch(action) {
       case "profile":
-        toast.info("Profile page coming soon");
+        navigate("/admin/profile");
         break;
       case "settings":
-        toast.info("Settings page coming soon");
+        navigate("/admin/settings");
         break;
       case "logout":
         toast.success("You have been logged out");
         // In a real app, you'd handle the logout process
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
         break;
     }
   };
